@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .button {
+            display: block;
+            width: 100px;
+            margin: 0 auto;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            background-color: #5fc464;
+            color: white;
+            border-radius: 30px;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="fileInput" style="display:none"/>
+    <button class="button" onclick="document.getElementById('fileInput').click()">Upload app</button>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('http://localhost:3000/uploadApp', { method: 'POST', body: formData })
+                    .then(response => response.text())
+                    .then(text => {
+                        alert(text);
+                    })
+            }
+        });
+    </script>
+</body>
+</html>
